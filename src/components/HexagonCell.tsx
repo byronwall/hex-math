@@ -20,13 +20,16 @@ export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
 
   const y = row * (hexSize * 1.5) + hexSize;
 
+  // a nice dark blue color
+  const fill = "#00008b";
+
   const hexProps = {
     x: x,
     y: y,
     sides: 6,
     radius: hexSize,
-    fill: state === "active" ? "red" : state === "remove" ? "yellow" : "white",
-    stroke: "black",
+    fill: state === "active" ? fill : state === "remove" ? "yellow" : "white",
+    stroke: state === "active" ? "white" : "black",
     strokeWidth: 1,
 
     opacity: state === "new" ? 0 : 1,
@@ -40,7 +43,7 @@ export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
     text: String(value),
     fontSize: 36,
     fontFamily: "Arial",
-    fill: "black",
+    fill: state === "active" ? "white" : "black",
     width: hexSize,
     align: "center",
     verticalAlign: "middle",
@@ -60,7 +63,7 @@ export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
 
     const tween = new Konva.Tween({
       node: shapeRef.current, // Reference to the shape
-      duration: 2,
+      duration: 4,
       opacity: targetOpacity,
     });
 

@@ -2,6 +2,14 @@
 
 A simple game on a hex grid to teach basic math to a kid.
 
+## Playing
+
+![Alt text](image.png)
+
+## New pieces - fade in
+
+![Alt text](image-1.png)
+
 ## Stack
 
 Contains:
@@ -12,3 +20,4 @@ Contains:
 - TailwindCSS
 - Github actions to build pages
 - NextUI for components
+- Konva and react-konva to handle canvas interactions
