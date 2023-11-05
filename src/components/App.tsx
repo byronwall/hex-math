@@ -11,7 +11,7 @@ export type HexagonData = {
   row: number;
   col: number;
   value: number;
-  isActive: boolean;
+  state: "active" | "inactive" | "new" | "remove";
 };
 
 export type HexagonGame = {
@@ -32,10 +32,36 @@ const App = () => {
 
   const handleHexClick = (index: number) => {
     const newGame = produce(hexagonGame, (draft) => {
-      draft.hexagons[index].isActive = !draft.hexagons[index].isActive;
+      // remove hexagons that are in the remove state
+      for (let i = draft.hexagons.length - 1; i >= 0; i--) {
+        if (draft.hexagons[i].state === "remove") {
+          draft.hexagons.splice(i, 1);
+        }
+      }
+
+      // force new state to be inactive
+      draft.hexagons.forEach((hexagon) => {
+        if (hexagon.state === "new") {
+          hexagon.state = "inactive";
+        }
+      });
+
+      const clickedHex = draft.hexagons.find(
+        (hexagon) => hexagon.index === index
+      );
+
+      if (!clickedHex) {
+        return;
+      }
+
+      if (clickedHex.state === "active") {
+        clickedHex.state = "inactive";
+      } else {
+        clickedHex.state = "active";
+      }
 
       const newSum = draft.hexagons.reduce((acc, hexagon) => {
-        if (hexagon.isActive) {
+        if (hexagon.state === "active") {
           return acc + hexagon.value;
         }
         return acc;
@@ -46,9 +72,22 @@ const App = () => {
         // make all hexagons in active state inactive
 
         draft.hexagons.forEach((hexagon) => {
-          if (hexagon.isActive) {
-            hexagon.value = Math.floor(Math.random() * 20) + 1;
-            hexagon.isActive = false;
+          if (hexagon.state === "active") {
+            hexagon.state = "remove";
+
+            // add a new one at the same spot
+
+            const newHex: HexagonData = {
+              index: hexagon.index,
+              row: hexagon.row,
+              col: hexagon.col,
+              value: Math.floor(Math.random() * 20) + 1,
+              state: "new",
+            };
+
+            draft.hexagons.push(newHex);
+
+            hexagon.index = -hexagon.index;
           }
         });
 
@@ -60,7 +99,7 @@ const App = () => {
   };
 
   const activeHexagons = hexagonGame.hexagons.filter(
-    (hexagon) => hexagon.isActive
+    (hexagon) => hexagon.state === "active"
   );
 
   const total = activeHexagons.reduce((acc, hexagon) => {

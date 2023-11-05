@@ -9,18 +9,16 @@ type Props = {
 };
 
 const HexGrid = ({ hexagonGame, onHexClick }: Props) => {
-  const hexSize = 70;
-
   const { hexagons } = hexagonGame;
 
   return (
-    <Stage width={800} height={600}>
+    <Stage width={600} height={600}>
       <Layer>
         {hexagons.map((hexagon) => (
           <HexagonCell
             key={hexagon.index}
             hexagon={hexagon}
-            hexSize={hexSize}
+            hexSize={50}
             onHexClick={onHexClick}
           />
         ))}

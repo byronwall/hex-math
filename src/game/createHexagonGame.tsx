@@ -17,7 +17,7 @@ export function createHexagonGame(
       value: Math.floor(Math.random() * 10) + 1,
       row,
       col,
-      isActive: false,
+      state: "inactive",
     });
   }
 

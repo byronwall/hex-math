@@ -1,4 +1,6 @@
 import { RegularPolygon, Text } from "react-konva";
+import Konva from "konva";
+import { useCallback, useEffect, useRef } from "react";
 
 import { type HexagonGame } from "./App";
 
@@ -9,7 +11,7 @@ type Props = {
 };
 
 export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
-  const { col, row, value, index, isActive } = hexagon;
+  const { col, row, value, index, state } = hexagon;
 
   const hexWidth = (Math.sqrt(3) / 2) * hexSize;
 
@@ -23,9 +25,12 @@ export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
     y: y,
     sides: 6,
     radius: hexSize,
-    fill: isActive ? "red" : "white",
+    fill: state === "active" ? "red" : state === "remove" ? "yellow" : "white",
     stroke: "black",
     strokeWidth: 1,
+
+    opacity: state === "new" ? 0 : 1,
+
     onClick: () => onHexClick(index),
   };
 
@@ -44,10 +49,34 @@ export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
     onClick: () => onHexClick(index),
   };
 
+  const shapeRef = useRef<Konva.RegularPolygon>(null);
+
+  const handleAnimation = useCallback(() => {
+    if (!shapeRef.current) {
+      return;
+    }
+
+    const targetOpacity = state === "remove" ? 0 : 1;
+
+    const tween = new Konva.Tween({
+      node: shapeRef.current, // Reference to the shape
+      duration: 2,
+      opacity: targetOpacity,
+    });
+
+    tween.play();
+  }, [state]);
+
+  useEffect(() => {
+    if (state === "remove" || state === "new") {
+      handleAnimation();
+    }
+  }, [handleAnimation, state]);
+
   return (
     <>
-      <RegularPolygon {...hexProps} />
-      <Text {...textProps} />
+      <RegularPolygon {...hexProps} ref={shapeRef} />
+      {state !== "remove" && <Text {...textProps} />}
     </>
   );
 }
