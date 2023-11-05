@@ -4,11 +4,11 @@ A simple game on a hex grid to teach basic math to a kid.
 
 ## Playing
 
-![Alt text](image.png)
+![Alt text](./docs/image.png)
 
 ## New pieces - fade in
 
-![Alt text](image-1.png)
+![Alt text](./docs/image-1.png)
 
 ## Stack
 
