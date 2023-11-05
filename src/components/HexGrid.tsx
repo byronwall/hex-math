@@ -10,9 +10,8 @@ type Props = {
 
 const HexGrid = ({ hexagonGame, onHexClick }: Props) => {
   const hexSize = 70;
-  const hexWidth = 2 * hexSize;
 
-  const { gridWidth, gridHeight, hexagons } = hexagonGame;
+  const { hexagons } = hexagonGame;
 
   return (
     <Stage width={800} height={600}>
