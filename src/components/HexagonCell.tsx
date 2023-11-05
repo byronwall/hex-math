@@ -35,6 +35,7 @@ export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
     opacity: state === "new" ? 0 : 1,
 
     onClick: () => onHexClick(index),
+    onTap: () => onHexClick(index),
   };
 
   const textProps = {
@@ -50,6 +51,7 @@ export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
     offsetX: hexWidth / 2,
     offsetY: hexWidth / 3,
     onClick: () => onHexClick(index),
+    onTap: () => onHexClick(index),
   };
 
   const shapeRef = useRef<Konva.RegularPolygon>(null);
