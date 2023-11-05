@@ -11,9 +11,12 @@ type Props = {
 export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
   const { col, row, value, index, isActive } = hexagon;
 
-  const x_offset = row % 2 === 0 ? hexSize / 2 : hexSize;
+  const hexWidth = (Math.sqrt(3) / 2) * hexSize;
+
+  const x_offset = row % 2 === 0 ? hexWidth * 2 : hexWidth;
+  const x = col * hexWidth * 2 + x_offset;
+
   const y = row * (hexSize * 1.5) + hexSize;
-  const x = col * hexSize * 2 + x_offset;
 
   const hexProps = {
     x: x,
@@ -36,8 +39,9 @@ export function HexagonCell({ hexagon, onHexClick, hexSize }: Props) {
     width: hexSize,
     align: "center",
     verticalAlign: "middle",
-    offsetX: hexSize,
-    offsetY: hexSize / 2,
+    offsetX: hexWidth / 2,
+    offsetY: hexWidth / 3,
+    onClick: () => onHexClick(index),
   };
 
   return (
