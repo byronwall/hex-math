@@ -1,4 +1,5 @@
 import { Stage, Layer } from "react-konva";
+import { useWindowSize } from "react-use";
 
 import { type HexagonGame } from "./App";
 import { HexagonCell } from "./HexagonCell";
@@ -11,8 +12,13 @@ type Props = {
 const HexGrid = ({ hexagonGame, onHexClick }: Props) => {
   const { hexagons } = hexagonGame;
 
+  // get full screen width
+  const { width, height } = useWindowSize();
+
+  // get full screen height
+
   return (
-    <Stage width={600} height={600}>
+    <Stage width={width} height={height}>
       <Layer>
         {hexagons.map((hexagon) => (
           <HexagonCell

@@ -27,7 +27,7 @@ const App = () => {
   // random number up to 20
 
   const [hexagonGame, setHexagonGame] = useState<HexagonGame>(
-    createHexagonGame(5, 5)
+    createHexagonGame(20, 20)
   );
 
   const handleHexClick = (index: number) => {
@@ -110,14 +110,16 @@ const App = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h2>Target: {targetSum}</h2>
-      <h2>
-        Equation: {activeHexagons.map((hexagon) => hexagon.value).join(" + ")} ={" "}
-        {total}
-      </h2>
+      <div className="flex gap-4">
+        <h2>Target: {targetSum}</h2>
+        <h2>
+          Equation: {activeHexagons.map((hexagon) => hexagon.value).join(" + ")}{" "}
+          = {total}
+        </h2>
+      </div>
       <Button
         onClick={() => {
-          setHexagonGame(createHexagonGame(5, 5));
+          setHexagonGame(createHexagonGame(20, 20));
         }}
       >
         reset
